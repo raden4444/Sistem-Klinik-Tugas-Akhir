@@ -1,6 +1,7 @@
 data_pasien = {}
 
 def tambah_pasien():
+
     while True:
         id_pasien = (input("Masukkan ID Pasien = ")).strip().upper()
         if id_pasien == "":
@@ -11,38 +12,33 @@ def tambah_pasien():
            break
 
     Nama = input("Masukkan Nama = ")
-    try:
-        Usia = int(input("Masukkan Usia Pasien = "))
-    except ValueError:
-        print("Usia harus berupa angka")
-        return
+    
+    while True:
+        try:
+            Usia = int(input("Masukkan Usia Pasien = "))
+            break
+        except ValueError:
+            print("Usia harus berupa angka")
+    
+
     Keluhan = input("Masukkan Keluhan = ")
     
     while True:
         tingkat_urgensi = input("Tingkat urgensi (rendah/tinggi )= ").strip().upper().replace(" ","")
-        if tingkat_urgensi == "TINGGI":
-           data_pasien[tingkat_urgensi] = "Tinggi"
-           break
-        elif tingkat_urgensi == "RENDAH":
-           data_pasie[tingkat_urgensi] = "Rendah"
-           break
+        if tingkat_urgensi == "TINGGI" or tingkat_urgensi == "RENDAH":
+            break
         else:
-           print("Jawaban tidak valid!")
-
+            print("Jawaban tidak valid!")
+    
     data_pasien[id_pasien] = {
         "Nama": Nama,
         "Usia": Usia,
         "Keluhan": Keluhan,
-        "Tingkat_Urgensi": tingkat_urgensi,
+        "Tingkat_Urgensi": tingkat_urgensi.capitalize(),
         "Rekam_Medis": []
     }
 
     print("Pasien berhasil ditambahkan")
-
-    # DEBUG
-    print("DEBUG DATA:")
-    print(data_pasien)
-
 
 def cari_pasien():
     cari = input("Masukkan ID pasien yang dicari = ").strip().upper().replace(" ", "")
@@ -61,47 +57,8 @@ def cari_pasien():
     else:
         print("Pasien tidak ditemukan")
 
-def tambah_rekam_medis():
-    id_pasien = input("Masukkan ID pasien yang dicari = ").strip().upper().replace(" ", "")
-    if id_pasien in data_pasien:
-       diagnosa = input("Masukkan Diagnosa = ")
-       tindakan = input("Masukkan Tindakan = ")
-       resep = input("Masukkan Resep = ")
-
-       rekam_medis_baru = {
-        "diagnosa": diagnosa,
-        "tindakan": tindakan,
-        "resep": resep,
-       }
-
-       data_pasien[id_pasien]["Rekam_Medis"].append(rekam_medis_baru)
-       print("Rekam medis berhasil ditambahkan")
-       print(data_pasien)
-    else:
-        print("Pasien Tidak Ditemukan!")
-
-
-def lihat_rekam_medis():
-    id_pasien = input("Masukkan ID Pasien yang dicari = ").strip().upper().replace(" ","")
-    if id_pasien in data_pasien:
-
-        lihat_rekam = data_pasien[id_pasien]["Rekam_Medis"]
-        if len(lihat_rekam) == 0:
-          print("Belum ada rekam medis!")
-
-        else:
-            for item in lihat_rekam:
-                print("=====Rekam Medis Pasien=====")
-                print("Diagnosa", item["diagnosa"])
-                print("Tindakan", item["tindakan"])
-                print("Resep", item["resep"])
-                
-    else:
-        print("Pasien Tidak ditemukan!")
-
 def hapus_pasien():
-
-    print("Debug data")
+    
     print(data_pasien)
     id_hapus = (input("Masukkan id yang ingin dihapus : ")).strip().upper().replace(" ", "")
 
